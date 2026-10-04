@@ -8,10 +8,9 @@ const lessonView = document.querySelector('.lesson-view');
 const libraryView = document.querySelector('#library-view');
 const article = document.querySelector('.lesson-article');
 const originalArticle = article.innerHTML;
-const modeSwitch = document.querySelector('.lesson-mode-switch');
 let selectedLesson = 'Present Simple';
 let selectedMode = 'study';
-let observer;
+const orderedLessons = Object.values(lessonGroups).flat();
 
 const slug = (value) => value.toLowerCase().replaceAll(' ', '-');
 const lessonHash = (title, mode) => `#lesson/${slug(title)}/${mode}`;
@@ -19,22 +18,118 @@ const titleFromSlug = (value) => Object.values(lessonGroups).flat().find((title)
 function groupFor(title) {
   return Object.entries(lessonGroups).find(([, titles]) => titles.includes(title))?.[0] ?? 'present';
 }
-function setActiveTab(id) {
-  document.querySelectorAll('.lesson-tab').forEach((tab) => {
-    const active = tab.dataset.tab === id;
-    tab.classList.toggle('active', active);
-    tab.setAttribute('aria-selected', String(active));
+function arabicHelpTrigger(lesson, key, index = '') {
+  return `<button class="arabic-help-trigger" type="button" data-arabic-help data-help-lesson="${lesson}" data-help-key="${key}" data-help-index="${index}" aria-label="Show Arabic explanation" aria-haspopup="dialog" aria-expanded="false" title="Show Arabic explanation"><span aria-hidden="true">ع</span></button>`;
+}
+function helpableCopy(content, lesson, key, index = '', element = 'p', className = '') {
+  return `<div class="arabic-help-inline"><${element}${className ? ` class="${className}"` : ''}>${content}</${element}>${arabicHelpTrigger(lesson, key, index)}</div>`;
+}
+function setArabicHelpOpen(trigger, open) {
+  trigger?.setAttribute('aria-expanded', String(open));
+}
+function closeArabicHelp(restoreFocus = false) {
+  const popover = document.querySelector('.arabic-help-popover');
+  if (!popover) return;
+  const trigger = document.querySelector(`[data-arabic-help][aria-expanded="true"]`);
+  popover.hidden = true;
+  setArabicHelpOpen(trigger, false);
+  if (restoreFocus) trigger?.focus();
+}
+function showArabicHelp(trigger) {
+  const lessonHelp = window.arabicHelp?.[trigger.dataset.helpLesson];
+  const value = lessonHelp?.[trigger.dataset.helpKey];
+  const index = Number(trigger.dataset.helpIndex);
+  const explanation = trigger.dataset.helpKey === 'timeWords'
+    ? 'تساعد كلمات الزمن على معرفة الفترة التي تتحدث عنها الجملة، ومتى يناسب استخدام هذا الزمن.'
+    : Array.isArray(value) ? value[index] : value;
+  if (!explanation) return;
+
+  let popover = document.querySelector('.arabic-help-popover');
+  if (!popover) {
+    popover = document.createElement('div');
+    popover.className = 'arabic-help-popover';
+    popover.id = 'arabic-help-popover';
+    popover.setAttribute('role', 'dialog');
+    popover.setAttribute('aria-labelledby', 'arabic-help-title');
+    popover.setAttribute('aria-describedby', 'arabic-help-copy');
+    popover.hidden = true;
+    popover.innerHTML = '<div class="arabic-help-popover-head"><strong id="arabic-help-title" lang="ar" dir="rtl">شرح بالعربي</strong><button class="arabic-help-close" type="button" aria-label="Close Arabic explanation">×</button></div><p id="arabic-help-copy" lang="ar" dir="rtl"></p>';
+    document.body.append(popover);
+    popover.querySelector('.arabic-help-close').addEventListener('click', () => closeArabicHelp(true));
+  }
+  document.querySelectorAll('[data-arabic-help][aria-expanded="true"]').forEach((openTrigger) => setArabicHelpOpen(openTrigger, false));
+  popover.querySelector('#arabic-help-copy').textContent = explanation;
+  trigger.setAttribute('aria-controls', popover.id);
+  setArabicHelpOpen(trigger, true);
+  popover.hidden = false;
+
+  const rect = trigger.getBoundingClientRect();
+  const width = Math.min(340, window.innerWidth - 28);
+  let left = Math.max(14, Math.min(rect.left, window.innerWidth - width - 14));
+  let top = rect.bottom + 9;
+  popover.style.width = `${width}px`;
+  popover.style.left = `${left}px`;
+  popover.style.top = `${top}px`;
+  const popupRect = popover.getBoundingClientRect();
+  if (popupRect.bottom > window.innerHeight - 12) top = Math.max(12, rect.top - popupRect.height - 9);
+  popover.style.top = `${top}px`;
+  popover.querySelector('.arabic-help-close').focus();
+}
+function addPresentSimpleArabicHelp() {
+  const append = (target, key, index = '') => {
+    const element = document.querySelector(target);
+    if (element && !element.nextElementSibling?.matches('[data-arabic-help]')) element.insertAdjacentHTML('afterend', arabicHelpTrigger('Present Simple', key, index));
+  };
+  append('#explanation > .section-lead', 'definition');
+  append('#explanation .explanation-card p', 'short');
+  append('#explanation .formula-card', 'form');
+  append('#explanation .grammar-note p', 'spelling');
+  document.querySelectorAll('#explanation .pattern-card').forEach((card) => {
+    if (!card.querySelector('[data-arabic-help]')) card.insertAdjacentHTML('beforeend', arabicHelpTrigger('Present Simple', 'negQuestion'));
+  });
+  append('#academic .section-lead', 'definition');
+  const useIndices = { 'Core uses': 0, 'Third-person spelling': 'thirdPerson', 'Adverbs of frequency': 'frequency', 'Present Simple or Present Continuous?': 'compare' };
+  document.querySelectorAll('#academic .academic-card').forEach((card) => {
+    const heading = card.querySelector('h3')?.textContent.trim();
+    const key = useIndices[heading];
+    if (key === 0) card.insertAdjacentHTML('beforeend', [0, 1, 2, 3].map((index) => arabicHelpTrigger('Present Simple', 'uses', index)).join(''));
+    else if (key && !card.querySelector('[data-arabic-help]')) card.insertAdjacentHTML('beforeend', arabicHelpTrigger('Present Simple', key));
+  });
+  document.querySelectorAll('#examples .example-context').forEach((context, index) => {
+    if (!context.parentElement.querySelector('[data-arabic-help]')) context.insertAdjacentHTML('afterend', arabicHelpTrigger('Present Simple', 'examples', index));
+  });
+  document.querySelectorAll('#tips .tip-row').forEach((row, index) => {
+    if (!row.querySelector('[data-arabic-help]')) row.querySelector('div').insertAdjacentHTML('beforeend', arabicHelpTrigger('Present Simple', 'tips', index));
   });
 }
-function observeCurrentSections() {
-  observer?.disconnect();
-  if (!('IntersectionObserver' in window)) return;
-  observer = new IntersectionObserver((entries) => {
-    const visible = entries.filter((entry) => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (visible) setActiveTab(visible.target.dataset.section);
-  }, { rootMargin: '-13% 0px -68% 0px', threshold: [0, 0.12, 0.3] });
-  document.querySelectorAll('.lesson-article [data-section]').forEach((section) => observer.observe(section));
+document.addEventListener('click', (event) => {
+  const trigger = event.target.closest('[data-arabic-help]');
+  if (trigger) {
+    if (trigger.getAttribute('aria-expanded') === 'true') closeArabicHelp();
+    else showArabicHelp(trigger);
+    return;
+  }
+  if (!event.target.closest('.arabic-help-popover')) closeArabicHelp();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeArabicHelp(true);
+});
+document.addEventListener('pointerdown', (event) => {
+  if (!event.target.closest('.arabic-help-popover, [data-arabic-help]')) closeArabicHelp();
+});
+function lessonStepMarkup() {
+  const index = orderedLessons.indexOf(selectedLesson);
+  return `<nav class="lesson-step-nav" aria-label="Move through the lessons"><button type="button" data-previous-lesson ${index <= 0 ? 'disabled' : ''}>← Previous lesson</button><span>Lesson ${index + 1} of ${orderedLessons.length}</span><button type="button" data-next-lesson ${index >= orderedLessons.length - 1 ? 'disabled' : ''}>Next lesson →</button></nav>`;
+}
+function wireLessonStepNav(root = article) {
+  root.querySelector('[data-previous-lesson]')?.addEventListener('click', () => {
+    const index = orderedLessons.indexOf(selectedLesson);
+    if (index > 0) openLesson(orderedLessons[index - 1], 'study');
+  });
+  root.querySelector('[data-next-lesson]')?.addEventListener('click', () => {
+    const index = orderedLessons.indexOf(selectedLesson);
+    if (index < orderedLessons.length - 1) openLesson(orderedLessons[index + 1], 'study');
+  });
 }
 function syncNav() {
   document.querySelectorAll('.nav-lesson-row').forEach((row) => {
@@ -50,6 +145,13 @@ function syncNav() {
       link.setAttribute('aria-current', active ? 'page' : 'false');
     });
   });
+  const activeGroup = selectedMode === 'reference' ? '' : groupFor(selectedLesson);
+  document.querySelectorAll('.group-heading').forEach((button) => {
+    const group = button.dataset.group;
+    const expanded = group === activeGroup;
+    button.setAttribute('aria-expanded', String(expanded));
+    document.querySelector(`[data-items="${group}"]`)?.classList.toggle('collapsed', !expanded);
+  });
   document.querySelectorAll('[data-reference]').forEach((link) => link.classList.remove('active'));
 }
 function buildStudyMarkup(title, data) {
@@ -57,7 +159,7 @@ function buildStudyMarkup(title, data) {
   return `
     <section class="lesson-section" id="explanation" data-section="explanation">
       <div class="section-heading"><div><h2>How the ${title} works</h2></div></div>
-      <p class="section-lead">${data.definition}</p>
+      ${helpableCopy(data.definition, title, 'definition', '', 'p', 'section-lead-wrap')}
       <div class="subheading-row"><h3>Build the sentence</h3></div>
       <div class="formula-card lesson-formulas">
         <div class="lesson-formula-row"><span class="lesson-formula-label">FORM</span><span>${data.form[0]}</span></div>
@@ -65,22 +167,23 @@ function buildStudyMarkup(title, data) {
         <div class="lesson-formula-row"><span class="lesson-formula-label">NEGATIVE</span><span>${data.form[2]}</span></div>
         <div class="lesson-formula-row"><span class="lesson-formula-label">QUESTION</span><span>${data.form[3]}</span></div>
       </div>
-      <div class="grammar-note"><span class="note-icon">i</span><p><strong>Common time expressions:</strong> ${data.timeWords}.</p></div>
+      ${arabicHelpTrigger(title, 'form')}
+      <div class="grammar-note"><span class="note-icon">i</span><p><strong>Common time expressions:</strong> ${data.timeWords}.</p>${arabicHelpTrigger(title, 'timeWords')}</div>
     </section>
     <section class="lesson-section academic-section" id="academic">
       <div class="section-heading"><div><h2>When to use it</h2></div></div>
-      <div class="academic-grid">${data.uses.map(([heading, example, detail]) => `<article class="academic-card"><h3>${heading}</h3><p class="academic-example">“${example}”</p><p>${detail}</p></article>`).join('')}</div>
-      <div class="academic-grid academic-notes"><article class="academic-card"><h3>Compare the meaning</h3><p>${data.contrast}</p></article><article class="academic-card"><h3>A common mistake</h3><p>${data.mistake}</p></article></div>
+      <div class="academic-grid">${data.uses.map(([heading, example, detail], index) => `<article class="academic-card"><h3>${heading}</h3><p class="academic-example">“${example}”</p><div class="arabic-help-inline"><p>${detail}</p>${arabicHelpTrigger(title, 'uses', index)}</div></article>`).join('')}</div>
+      <div class="academic-grid academic-notes"><article class="academic-card"><h3>Compare the meaning</h3><div class="arabic-help-inline"><p>${data.contrast}</p>${arabicHelpTrigger(title, 'contrast')}</div></article><article class="academic-card"><h3>A common mistake</h3><div class="arabic-help-inline"><p>${data.mistake}</p>${arabicHelpTrigger(title, 'mistake')}</div></article></div>
     </section>
     <section class="lesson-section examples-section" id="examples" data-section="examples">
       <div class="section-heading"><div><h2>Real-life examples</h2></div></div>
       <p class="section-lead">Notice how the tense fits the meaning in each everyday situation.</p>
-      <div class="example-list">${data.examples.map(([sentence, context], index) => `<article class="example-card"><span class="example-icon">${['✎','◷','↗'][index]}</span><div><p>${sentence}</p><span class="example-context">${context}</span></div><span class="example-number">0${index + 1}</span></article>`).join('')}</div>
+      <div class="example-list">${data.examples.map(([sentence, context], index) => `<article class="example-card"><span class="example-icon">${['✎','◷','↗'][index]}</span><div><p>${sentence}</p><div class="arabic-help-inline"><span class="example-context">${context}</span>${arabicHelpTrigger(title, 'examples', index)}</div></div><span class="example-number">0${index + 1}</span></article>`).join('')}</div>
       <div class="say-it-card"><div class="say-it-icon">↗</div><div><span class="say-it-label">PRACTISE</span><p>Make one true sentence about your own life using the ${title}.</p><span class="say-it-help">Say it aloud, then write it down.</span></div></div>
     </section>
     <section class="lesson-section tips-section" id="tips" data-section="tips">
       <div class="section-heading"><div><h2>Tips for using it well</h2></div></div>
-      <div class="tip-list">${data.tips.map((tip, index) => `<div class="tip-row"><span class="tip-bullet">0${index + 1}</span><div><p>${tip}</p></div></div>`).join('')}</div>
+      <div class="tip-list">${data.tips.map((tip, index) => `<div class="tip-row"><span class="tip-bullet">0${index + 1}</span><div><div class="arabic-help-inline"><p>${tip}</p>${arabicHelpTrigger(title, 'tips', index)}</div></div></div>`).join('')}</div>
       <div class="confidence-card"><span class="confidence-sparkle">✳</span><p>Grammar becomes easier with practice.<br><strong>Try making your own examples next.</strong></p></div>
     </section>
     <section class="lesson-section videos-section" id="videos" data-section="videos">
@@ -90,28 +193,19 @@ function buildStudyMarkup(title, data) {
       <a class="video-card" href="https://www.youtube.com/results?search_query=${encodeURIComponent(`BBC Learning English ${title} tense`)}" target="_blank" rel="noreferrer"><span class="video-play">▶</span><span class="video-copy"><span class="video-source">BBC LEARNING ENGLISH</span><strong>More ${title} practice</strong><span>Find another short lesson from a trusted learning channel.</span></span><span class="video-arrow">↗</span></a>
       <p class="video-footnote">Video searches open YouTube in a new tab.</p>
     </section>
-    <div class="lesson-footer"><span>One lesson at a time. Keep going.</span><button type="button" class="back-to-top" data-back-top>Back to top ↑</button></div>`;
+    <div class="lesson-footer">${lessonStepMarkup()}</div>`;
 }
 
 function showStudy() {
   const data = window.tenseLessons[selectedLesson];
   article.innerHTML = buildStudyMarkup(selectedLesson, data);
-  document.querySelector('.lesson-tabs').hidden = false;
-  document.querySelectorAll('.lesson-tab').forEach((tab) => {
-    tab.onclick = () => {
-      document.getElementById(tab.dataset.tab)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveTab(tab.dataset.tab);
-    };
-  });
-  document.querySelector('[data-back-top]')?.addEventListener('click', () => document.querySelector('.lesson-heading').scrollIntoView({ behavior: 'smooth', block: 'start' }));
-  setActiveTab('explanation');
-  modeSwitch.querySelectorAll('.mode-button').forEach((button) => button.classList.toggle('active', button.dataset.mode === 'study'));
-  observeCurrentSections();
+  if (!data) addPresentSimpleArabicHelp();
+  const footer = article.querySelector('.lesson-footer');
+  if (!data && footer) footer.innerHTML = lessonStepMarkup();
+  wireLessonStepNav();
 }
 
 function showPractice() {
-  document.querySelector('.lesson-tabs').hidden = true;
-  modeSwitch.querySelectorAll('.mode-button').forEach((button) => button.classList.toggle('active', button.dataset.mode === 'practice'));
   const questions = [...window.practiceQuestions[selectedLesson], ...(window.extraPracticeQuestions[selectedLesson] ?? [])];
   let index = 0;
   let score = 0;
@@ -120,8 +214,9 @@ function showPractice() {
   let earned = false;
   const draw = () => {
     if (index >= questions.length) {
-      article.innerHTML = `<section class="practice-complete"><div class="complete-icon">✓</div><p class="practice-kicker">PRACTICE COMPLETE</p><h2>Nice work!</h2><p>You got <strong>${score} of ${questions.length}</strong> questions correct.</p><button class="primary-button" data-play-again>Try again</button></section>`;
+      article.innerHTML = `<section class="practice-complete"><div class="complete-icon">✓</div><p class="practice-kicker">PRACTICE COMPLETE</p><h2>Nice work!</h2><p>You got <strong>${score} of ${questions.length}</strong> questions correct.</p><button class="primary-button" data-play-again>Try again</button>${lessonStepMarkup()}</section>`;
       article.querySelector('[data-play-again]').addEventListener('click', () => { index = 0; score = 0; placed = ''; checked = false; earned = false; draw(); });
+      wireLessonStepNav();
       return;
     }
     const question = questions[index];
@@ -147,13 +242,13 @@ function showPractice() {
     article.querySelector('.next-question')?.addEventListener('click', () => { index += 1; placed = ''; checked = false; earned = false; draw(); });
   };
   draw();
-  observer?.disconnect();
 }
 
 function openLesson(title, mode = 'study', push = true) {
   selectedLesson = title;
   selectedMode = mode;
   document.body.classList.add('lesson-active');
+  document.body.classList.remove('home-active');
   welcomeView.hidden = true;
   lessonView.hidden = false;
   libraryView.hidden = true;
@@ -162,6 +257,11 @@ function openLesson(title, mode = 'study', push = true) {
   const crumbs = document.querySelectorAll('.breadcrumbs > span');
   if (crumbs[1]) crumbs[1].textContent = `${groupFor(title)[0].toUpperCase()}${groupFor(title).slice(1)} tenses`;
   document.querySelector('.breadcrumbs > strong').textContent = title;
+  const lessonNumber = orderedLessons.indexOf(title) + 1;
+  document.querySelector('.kicker-pill').textContent = `LESSON ${lessonNumber} OF ${orderedLessons.length}`;
+  document.querySelector('.lesson-path-hint').textContent = mode === 'practice'
+    ? 'Complete the questions. Then click Next lesson to continue.'
+    : 'Read the lesson from top to bottom. When ready, choose Practice under its name on the left.';
   if (mode === 'practice') showPractice(); else showStudy();
   syncNav();
   if (push && location.hash !== lessonHash(title, mode)) history.pushState({ title, mode }, '', lessonHash(title, mode));
@@ -170,6 +270,7 @@ function openLesson(title, mode = 'study', push = true) {
 
 function renderLibrary(type, push = true) {
   document.body.classList.add('lesson-active');
+  document.body.classList.remove('home-active');
   welcomeView.hidden = true;
   lessonView.hidden = true;
   libraryView.hidden = false;
@@ -197,6 +298,7 @@ function renderLibrary(type, push = true) {
 
 function activateWelcome(push = true) {
   document.body.classList.remove('lesson-active');
+  document.body.classList.add('home-active');
   lessonView.hidden = true;
   libraryView.hidden = true;
   welcomeView.hidden = false;
@@ -205,6 +307,10 @@ function activateWelcome(push = true) {
     row.querySelector('.nav-title').setAttribute('aria-expanded', 'false');
     row.querySelector('.nav-subtabs').hidden = true;
     row.querySelectorAll('.nav-subtab').forEach((link) => link.classList.remove('active'));
+  });
+  document.querySelectorAll('.group-heading').forEach((button) => {
+    button.setAttribute('aria-expanded', 'false');
+    document.querySelector(`[data-items="${button.dataset.group}"]`)?.classList.add('collapsed');
   });
   if (push && location.hash !== '#home') history.pushState(null, '', '#home');
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -240,6 +346,12 @@ Object.entries(lessonGroups).forEach(([group, titles]) => {
 });
 document.querySelectorAll('.group-heading').forEach((button) => button.addEventListener('click', () => {
   const expanded = button.getAttribute('aria-expanded') === 'true';
+  if (!expanded && button.dataset.group !== 'reference') {
+    document.querySelectorAll('.group-heading:not([data-group="reference"])').forEach((other) => {
+      other.setAttribute('aria-expanded', 'false');
+      document.querySelector(`[data-items="${other.dataset.group}"]`)?.classList.add('collapsed');
+    });
+  }
   button.setAttribute('aria-expanded', String(!expanded));
   document.querySelector(`[data-items="${button.dataset.group}"]`).classList.toggle('collapsed', expanded);
 }));
@@ -248,11 +360,6 @@ document.querySelectorAll('.mode-button').forEach((button) => button.addEventLis
 document.querySelector('[data-open-lesson]').addEventListener('click', (event) => { event.preventDefault(); openLesson(selectedLesson, 'study'); });
 document.querySelector('[data-open-home]').addEventListener('click', (event) => { event.preventDefault(); activateWelcome(); });
 document.querySelectorAll('.breadcrumbs a').forEach((link) => link.addEventListener('click', (event) => { event.preventDefault(); activateWelcome(); }));
-document.querySelectorAll('.lesson-tab').forEach((tab) => tab.addEventListener('click', () => {
-  document.getElementById(tab.dataset.tab)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  setActiveTab(tab.dataset.tab);
-}));
-
 function syncFromUrl() {
   const hash = location.hash.slice(1);
   if (hash.startsWith('lesson/')) {

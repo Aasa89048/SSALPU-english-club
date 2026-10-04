@@ -13,43 +13,42 @@
   <script src="practice-data.js" defer></script>
   <script src="reference-data.js" defer></script>
   <script src="lesson-data.js" defer></script>
+  <script src="arabic-help-data.js" defer></script>
   <script src="app.js" defer></script>
 </head>
-<body>
+<body class="home-active">
   <header class="topbar">
     <a class="brand" href="#home" aria-label="English Club home" data-open-home>
       <span class="brand-wordmark"><span class="brand-english">English</span><span class="brand-club">club</span></span>
     </a>
-    <div class="topbar-center">Your little corner to learn English from the Sudanese community</div>
+    <div class="topbar-center">English lessons for Sudanese learners</div>
     <div class="saalpu-mark" aria-label="SSALPU Sudanese community mark"><span class="saalpu-letters"><span class="flag-red">S</span><span class="flag-green">S</span><span class="flag-black">A</span><span class="flag-green">L</span><span class="flag-red">P</span><span class="flag-black">U</span></span></div>
   </header>
 
   <div class="app-shell">
     <aside class="sidebar" aria-label="Lesson navigation">
       <div class="sidebar-intro">
-        <div class="sidebar-eyebrow">YOUR LEARNING PATH</div>
-        <h2>Grammar, made<br>feel-good.</h2>
-        <p>One small lesson at a time.<br>Big progress adds up.</p>
-        <div class="progress-line"><span></span></div>
-        <div class="progress-label"><span>YOUR PROGRESS</span><span>1 of 12</span></div>
+        <div class="sidebar-eyebrow">LESSONS</div>
+        <h2>Start here</h2>
+        <p>Choose a lesson and select Study.<br>Use Next lesson to continue.</p>
       </div>
       <nav id="lesson-nav">
         <div class="nav-group">
-          <button class="group-heading" type="button" aria-expanded="true" data-group="present"><span class="group-icon present-icon">◷</span><span>Present tenses</span><span class="group-count">04</span><span class="chevron">⌄</span></button>
-          <div class="nav-items" data-items="present"></div>
+          <button class="group-heading" type="button" aria-expanded="false" data-group="present"><span class="group-icon present-icon">◷</span><span>Present tenses</span><span class="group-count">04</span><span class="chevron">⌄</span></button>
+          <div class="nav-items collapsed" data-items="present"></div>
         </div>
         <div class="nav-group">
-          <button class="group-heading" type="button" aria-expanded="true" data-group="past"><span class="group-icon past-icon">◴</span><span>Past tenses</span><span class="group-count">04</span><span class="chevron">⌄</span></button>
-          <div class="nav-items" data-items="past"></div>
+          <button class="group-heading" type="button" aria-expanded="false" data-group="past"><span class="group-icon past-icon">◴</span><span>Past tenses</span><span class="group-count">04</span><span class="chevron">⌄</span></button>
+          <div class="nav-items collapsed" data-items="past"></div>
         </div>
         <div class="nav-group">
-          <button class="group-heading" type="button" aria-expanded="true" data-group="future"><span class="group-icon future-icon">◵</span><span>Future tenses</span><span class="group-count">04</span><span class="chevron">⌄</span></button>
-          <div class="nav-items" data-items="future"></div>
+          <button class="group-heading" type="button" aria-expanded="false" data-group="future"><span class="group-icon future-icon">◵</span><span>Future tenses</span><span class="group-count">04</span><span class="chevron">⌄</span></button>
+          <div class="nav-items collapsed" data-items="future"></div>
         </div>
       </nav>
       <div class="nav-group reference-group">
-        <button class="group-heading" type="button" aria-expanded="true" data-group="reference"><span class="group-icon reference-icon">↗</span><span>Quick reference</span><span class="group-count">02</span><span class="chevron">⌄</span></button>
-        <div class="nav-items" data-items="reference">
+        <button class="group-heading" type="button" aria-expanded="false" data-group="reference"><span class="group-icon reference-icon">↗</span><span>Quick reference</span><span class="group-count">02</span><span class="chevron">⌄</span></button>
+        <div class="nav-items collapsed" data-items="reference">
           <a class="nav-item reference-item" href="#verbs" data-reference="verbs">100 common verbs</a>
           <a class="nav-item reference-item" href="#sentences" data-reference="sentences">100 useful sentences</a>
         </div>
@@ -60,11 +59,10 @@
     <main id="main-content">
       <section class="welcome-view" id="home" aria-labelledby="welcome-title">
         <div class="welcome-copy">
-          <div class="welcome-kicker"><span>✳</span> A FRESH START, JUST FOR YOU</div>
-          <h1 id="welcome-title">English gets<br><span>easier from here.</span></h1>
-          <p class="welcome-description">No overwhelm. No complicated grammar talk. Just friendly lessons that make English click—one little win at a time.</p>
-          <button class="primary-button" data-open-lesson>Explore your first lesson <span aria-hidden="true">→</span></button>
-          <div class="welcome-note"><span class="note-stars">★★★★★</span><span>Made for real life, at your pace.</span></div>
+          <div class="welcome-kicker"><span>✳</span> WELCOME TO ENGLISH CLUB</div>
+          <h1 id="welcome-title">Learn English<br><span>step by step.</span></h1>
+          <p class="welcome-description">Simple English lessons for beginners. Start with Lesson 1, then follow Next lesson to continue.</p>
+          <button class="primary-button" data-open-lesson>Start learning <span aria-hidden="true">→</span></button>
         </div>
         <div class="welcome-art" aria-label="Illustration of a sunny study table">
           <div class="art-sun"></div><div class="art-shape"></div>
@@ -75,14 +73,12 @@
           <div class="art-sticker">You’ve<br>got this! <span>✦</span></div>
           <div class="art-caption"><span class="caption-line"></span> YOUR ENGLISH JOURNEY STARTS HERE</div>
         </div>
-        <div class="welcome-bottom"><span>01</span><span class="welcome-bottom-line"></span><span>START WITH THE BASICS</span><span class="welcome-bottom-spacer"></span><span class="bottom-arrow">↓</span></div>
       </section>
 
       <section class="lesson-view" id="lesson" aria-labelledby="lesson-title" hidden>
         <div class="lesson-topline"><div class="breadcrumbs"><a href="#home">Home</a><span>/</span><span>Present tenses</span><span>/</span><strong>Present Simple</strong></div><div class="lesson-meta"><span class="difficulty"><span></span> BEGINNER FRIENDLY</span><span class="meta-dot">·</span><span>6 MIN READ</span></div></div>
         <div class="lesson-heading"><div class="lesson-heading-copy"><div class="lesson-kicker"><span class="kicker-pill">LESSON 01</span><span>THE EVERYDAY TENSE</span></div><h1 id="lesson-title">Present Simple<span class="title-period">.</span></h1><p>For routines, facts, and all the little things that happen again and again.</p></div><div class="heading-illustration" aria-hidden="true"><div class="sun-face">☼</div><div class="heading-cloud">☁</div><div class="heading-ground"></div><div class="heading-sprout">♧</div></div></div>
-        <div class="lesson-mode-switch" aria-label="Lesson mode"><button class="mode-button active" data-mode="study">Study</button><button class="mode-button" data-mode="practice">Practice</button></div>
-        <div class="lesson-tabs" role="tablist" aria-label="Lesson sections"><button class="lesson-tab active" role="tab" aria-selected="true" data-tab="explanation"><span>01</span> The idea</button><button class="lesson-tab" role="tab" aria-selected="false" data-tab="examples"><span>02</span> Real-life examples</button><button class="lesson-tab" role="tab" aria-selected="false" data-tab="tips"><span>03</span> Quick tips</button><button class="lesson-tab" role="tab" aria-selected="false" data-tab="videos"><span>04</span> Watch & learn</button></div>
+        <div class="lesson-path-hint">Read the lesson from top to bottom. When ready, choose Practice under its name on the left.</div>
         <div class="lesson-layout"><div class="lesson-article">
           <section class="lesson-section" id="explanation" data-section="explanation"><div class="section-heading"><span class="section-number">01</span><div><div class="section-eyebrow">LET'S GET THE IDEA</div><h2>What is the Present Simple?</h2></div></div><p class="section-lead">Think of it as your <strong>everyday tense</strong>. We use the Present Simple to talk about routines, things that are generally true, and situations that stay the same.</p><div class="explanation-card"><div class="card-icon">☀</div><div><strong>The short version</strong><p>If something happens regularly or is true most of the time, the Present Simple is probably your tense.</p></div></div><div class="subheading-row"><h3>How to build a sentence</h3><span class="subheading-note">NICE AND SIMPLE</span></div><div class="formula-card"><div class="formula-line"><span class="formula-label">I / YOU / WE / THEY</span><span class="formula-equals">+</span><span class="formula-tense">base verb</span><span class="formula-example">I <b>work</b> here.</span></div><div class="formula-divider"></div><div class="formula-line"><span class="formula-label">HE / SHE / IT</span><span class="formula-equals">+</span><span class="formula-tense">verb + s</span><span class="formula-example">She <b>work<b>s</b></b> here.</span></div></div><div class="grammar-note"><span class="note-icon">i</span><p><strong>Little detail, big difference:</strong> Add <b>-s</b> or <b>-es</b> to the verb with <em>he, she,</em> or <em>it</em>. <span>He reads. She watches. It works.</span></p></div><div class="subheading-row"><h3>Make it negative or ask a question</h3><span class="subheading-note">WITH DO / DOES</span></div><div class="two-cards"><div class="pattern-card"><span class="pattern-label">SAY “NO”</span><p>I <b>don't</b> drink coffee.<br>She <b>doesn't</b> drink coffee.</p><span class="pattern-hint">Don't / doesn't + base verb</span></div><div class="pattern-card question-pattern"><span class="pattern-label">ASK A QUESTION</span><p><b>Do</b> you like tea?<br><b>Does</b> he like tea?</p><span class="pattern-hint">Do / does + person + base verb?</span></div></div></section>
 
@@ -92,7 +88,7 @@
           <section class="lesson-section tips-section" id="tips" data-section="tips"><div class="section-heading"><span class="section-number">03</span><div><div class="section-eyebrow">A FEW FRIENDLY REMINDERS</div><h2>Little tips that stick</h2></div></div><div class="tip-list"><div class="tip-row"><span class="tip-bullet">01</span><div><strong>Watch out for he, she, and it.</strong><p>That little <b>-s</b> matters! Say “Maya walks,” not “Maya walk.”</p></div></div><div class="tip-row"><span class="tip-bullet">02</span><div><strong>After “does,” drop the -s.</strong><p>“Does he <em>work</em> here?” and “He <em>doesn't like</em> tea.” The <b>-s</b> is already in <em>does</em>, so keep the next verb simple.</p></div></div><div class="tip-row"><span class="tip-bullet">03</span><div><strong>Listen for routine words.</strong><p><em>Always, usually, often, sometimes,</em> and <em>every day</em> are big clues that the Present Simple fits.</p></div></div><div class="tip-row"><span class="tip-bullet">04</span><div><strong>Use it for “state” verbs, too.</strong><p>For thoughts, feelings, and preferences, say “I <em>know</em>,” “she <em>likes</em> it,” or “they <em>need</em> help.”</p></div></div></div><div class="confidence-card"><span class="confidence-sparkle">✳</span><p>You don't have to get it perfect straight away.<br><strong>Noticing the pattern is already progress.</strong></p><span class="confidence-heart">♡</span></div></section>
 
           <section class="lesson-section videos-section" id="videos" data-section="videos"><div class="section-heading"><span class="section-number">04</span><div><div class="section-eyebrow">LEARN IT BY LISTENING</div><h2>Watch & learn</h2></div></div><p class="section-lead">Sometimes it helps to hear the grammar explained out loud. Pick a short video, relax, and follow along.</p><a class="video-card" href="https://www.youtube.com/results?search_query=British+Council+LearnEnglish+Present+simple" target="_blank" rel="noreferrer"><span class="video-play">▶</span><span class="video-copy"><span class="video-source">BRITISH COUNCIL · LEARNENGLISH</span><strong>Present simple: form and use</strong><span>Clear explanations and examples for everyday English learners.</span></span><span class="video-arrow">↗</span></a><a class="video-card second-video" href="https://www.youtube.com/results?search_query=BBC+Learning+English+present+simple+tense" target="_blank" rel="noreferrer"><span class="video-play">▶</span><span class="video-copy"><span class="video-source">BBC LEARNING ENGLISH</span><strong>Present simple: English grammar</strong><span>Search a trusted learning channel for a quick video lesson.</span></span><span class="video-arrow">↗</span></a><p class="video-footnote"><span>↗</span> Video links open YouTube in a new tab.</p></section>
-          <div class="lesson-footer"><span><span class="footer-star">✳</span> One lesson down. Look at you go!</span><button type="button" class="back-to-top" data-back-top>Back to top ↑</button></div>
+          <div class="lesson-footer"><nav class="lesson-step-nav" aria-label="Move through the lessons"><button type="button" data-previous-lesson disabled>← Previous lesson</button><span>Lesson 1 of 12</span><button type="button" data-next-lesson>Next lesson →</button></nav></div>
         </div></div>
       </section>
       <section class="library-view" id="library-view" hidden aria-live="polite"></section>
