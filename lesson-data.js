@@ -1,0 +1,135 @@
+// Core teaching content for the eleven tense lessons beyond Present Simple.
+window.tenseLessons = {
+  'Present Continuous': {
+    subtitle: 'Talk about what is happening now, around now, or already arranged.',
+    definition: 'The Present Continuous presents an activity as in progress or temporary. It is also used for changing situations and confirmed future arrangements.',
+    form: ['am / is / are + verb-ing', 'I am studying. / She is studying.', 'I am not studying. / She is not studying.', 'Am I studying? / Is she studying?'],
+    uses: [['An action in progress now', 'The students are taking an exam.', 'The activity is happening at the time of speaking.'], ['A temporary situation', 'I am staying with my cousin this week.', 'The situation is limited to the current period.'], ['A future arrangement', 'We are meeting the tutor at six.', 'The plan has been arranged.']],
+    examples: [['I am reading a book at the moment.', 'An action in progress now.'], ['Nadia is working from home this month.', 'A temporary situation.'], ['They are flying to Nairobi on Friday.', 'A definite future arrangement.']],
+    tips: ['Use a form of be before the -ing verb: I am, you/we/they are, he/she/it is.', 'Most verbs add -ing; drop a silent e (write → writing), and double a final consonant in some stressed CVC verbs (sit → sitting).', 'Stative verbs such as know, belong, and understand are not usually continuous when they describe a state.'],
+    mistake: 'Avoid omitting be: “She is studying,” not “She studying.”',
+    contrast: 'Present Simple describes a routine (“He walks to work”); Present Continuous describes an activity in progress or a temporary pattern (“He is walking to work this week”).',
+    timeWords: 'now, right now, at the moment, currently, this week',
+    videoQuery: 'British Council LearnEnglish present continuous grammar'
+  },
+  'Present Perfect': {
+    subtitle: 'Connect a past event or experience to the present.',
+    definition: 'The Present Perfect uses have or has with a past participle. It describes past events when the exact time is not stated or when their result or relevance continues into the present.',
+    form: ['have / has + past participle', 'I have finished. / She has finished.', 'I have not finished. / She has not finished.', 'Have you finished? / Has she finished?'],
+    uses: [['Experience at an unspecified time', 'We have visited Khartoum twice.', 'The experience matters; the exact dates are not given.'], ['A present result', 'He has lost his keys.', 'He does not have the keys now.'], ['An unfinished time period', 'I have answered three emails today.', 'Today is still in progress.']],
+    examples: [['Have you ever tried Sudanese kisra?', 'A life experience; the time is unspecified.'], ['Mona has just sent the report.', 'A recent action with a present result.'], ['They have lived here since 2022.', 'A situation that began in the past and continues now.']],
+    tips: ['Use have with I/you/we/they and has with he/she/it.', 'Use the past participle, not always the simple past: go → gone, see → seen, write → written.', 'Use since for a starting point and for for a duration: since May; for six months.'],
+    mistake: 'Do not normally combine the Present Perfect with a finished past-time expression: say “I saw her yesterday,” not “I have seen her yesterday.”',
+    contrast: 'Present Perfect links the past to now (“I have read the book”); Past Simple places the event in a finished past time (“I read it last year”).',
+    timeWords: 'ever, never, just, already, yet, since, for, so far',
+    videoQuery: 'BBC Learning English present perfect tense'
+  },
+  'Present Perfect Continuous': {
+    subtitle: 'Emphasize an activity’s duration or its recent effects.',
+    definition: 'The Present Perfect Continuous uses have or has been plus an -ing verb. It looks back from the present and emphasizes the activity, its duration, or evidence of recent activity.',
+    form: ['have / has been + verb-ing', 'I have been studying. / She has been studying.', 'I have not been studying. / She has not been studying.', 'Have you been studying? / Has she been studying?'],
+    uses: [['An activity continuing until now', 'We have been learning English for a year.', 'The activity began earlier and is still continuing.'], ['A recent activity with visible effects', 'It has been raining; the streets are wet.', 'The recent activity explains the present evidence.'], ['Repeated activity over a period', 'She has been calling the office all morning.', 'The focus is on repeated attempts and duration.']],
+    examples: [['I have been waiting for twenty minutes.', 'The wait began earlier and continues now.'], ['Hassan is tired because he has been running.', 'A recent activity explains his present condition.'], ['How long have you been studying English?', 'Asks about the duration of an ongoing activity.']],
+    tips: ['Build it with have/has + been + verb-ing; keep all three parts.', 'Use for with a length of time and since with a starting point.', 'Action verbs work naturally here; state verbs such as know and own usually prefer the Present Perfect Simple.'],
+    mistake: 'Do not leave out been: “They have been working,” not “They have working.”',
+    contrast: 'The Present Perfect Continuous emphasizes the activity or its duration (“I have been writing”); the Present Perfect Simple often emphasizes a completed result or quantity (“I have written three pages”).',
+    timeWords: 'for, since, all day, lately, recently, how long',
+    videoQuery: 'English present perfect continuous grammar lesson'
+  },
+  'Past Simple': {
+    subtitle: 'Describe completed actions and situations in a finished past time.',
+    definition: 'The Past Simple presents an event or state as complete at a past time. That time may be named directly or understood from context.',
+    form: ['past verb form; did + base verb', 'I worked. / She went. / They were ready.', 'I did not work. / She did not go. / They were not ready.', 'Did you work? / Did she go? / Were they ready?'],
+    uses: [['A completed past event', 'The lesson ended at noon.', 'The event is finished and located in the past.'], ['A sequence of past events', 'He opened the door, walked in, and sat down.', 'The verbs move the story forward.'], ['A past habit or state', 'We played outside after school.', 'The habit belonged to a past period.']],
+    examples: [['I met my new teacher last Monday.', 'A completed event with a finished time.'], ['Amina bought bread and walked home.', 'Two completed events in sequence.'], ['They lived in Omdurman as children.', 'A past situation that is no longer true.']],
+    tips: ['Regular verbs usually add -ed; learn common irregular forms such as went, saw, and made.', 'In negatives and questions, use did + base form: “Did she go?” not “Did she went?”', 'With be, use was/were directly; do not add did.'],
+    mistake: 'After did or didn’t, use the base verb: “He didn’t call,” not “He didn’t called.”',
+    contrast: 'Past Simple uses a finished past time (“I called her yesterday”); Present Perfect connects an unspecified past event to now (“I have called her”).',
+    timeWords: 'yesterday, last week, in 2020, two days ago, when I was young',
+    videoQuery: 'British Council past simple tense lesson'
+  },
+  'Past Continuous': {
+    subtitle: 'Set the scene or show what was in progress at a past moment.',
+    definition: 'The Past Continuous uses was or were with an -ing verb. It views an activity from inside a past time, often as background to another event.',
+    form: ['was / were + verb-ing', 'I was reading. / They were reading.', 'I was not reading. / They were not reading.', 'Was she reading? / Were they reading?'],
+    uses: [['An action in progress at a past time', 'At eight, I was cooking dinner.', 'The time reference falls within the activity.'], ['Background to a shorter event', 'We were walking home when it began to rain.', 'The walk was in progress; the rain began during it.'], ['Two simultaneous activities', 'While I was studying, my brother was listening to music.', 'Both activities were in progress at the same time.']],
+    examples: [['She was reading when the phone rang.', 'Reading was in progress when the shorter event occurred.'], ['At this time yesterday, they were travelling north.', 'The activity was underway at a specific past moment.'], ['The sun was setting as we reached the village.', 'Background action and a completed event overlap.']],
+    tips: ['Use was with I/he/she/it and were with you/we/they.', 'Use while commonly with a continuing activity; when often introduces the event that interrupts it.', 'The Past Continuous does not itself say whether an action was completed.'],
+    mistake: 'Use was/were + -ing: “They were waiting,” not “They waiting.”',
+    contrast: 'Past Continuous gives an activity in progress (“I was cooking”); Past Simple gives the event that happened (“the lights went out”).',
+    timeWords: 'while, when, at that moment, at 7 o’clock, all evening',
+    videoQuery: 'BBC Learning English past continuous tense'
+  },
+  'Past Perfect': {
+    subtitle: 'Make clear which of two past events happened first.',
+    definition: 'The Past Perfect uses had with a past participle. It places one event before a later past reference point, helping the reader understand the order of past events.',
+    form: ['had + past participle', 'I had finished. / She had finished.', 'I had not finished. / She had not finished.', 'Had you finished? / Had she finished?'],
+    uses: [['An earlier event before another past event', 'The train had left before we reached the station.', 'Leaving happened before reaching.'], ['A past cause or explanation', 'He was nervous because he had never flown before.', 'The experience (or lack of it) came earlier.'], ['Reported speech about an earlier event', 'She said she had sent the form.', 'The sending preceded the saying.']],
+    examples: [['By the time class began, I had finished the exercise.', 'The exercise was complete before class began.'], ['They had already eaten when we arrived.', 'Eating happened first.'], ['Had you met her before the conference?', 'Asks about experience before a past point.']],
+    tips: ['Use had for every subject, followed by the past participle.', 'Use it when the order of past events needs clarification; chronological Past Simple is often enough when order is already clear.', 'Common pairings include by the time, before, after, and already.'],
+    mistake: 'Use the past participle after had: “She had gone,” not “She had went.”',
+    contrast: 'Past Perfect places an event before a past reference point (“They had left before noon”); Past Simple reports an event at a past time (“They left at noon”).',
+    timeWords: 'before, after, by the time, already, never, until then',
+    videoQuery: 'British Council past perfect grammar'
+  },
+  'Past Perfect Continuous': {
+    subtitle: 'Show how long an activity had been underway before a past point.',
+    definition: 'The Past Perfect Continuous uses had been plus an -ing verb. It looks back from a past reference point and emphasizes the duration or continuing nature of an earlier activity.',
+    form: ['had been + verb-ing', 'I had been waiting. / They had been waiting.', 'I had not been waiting. / They had not been waiting.', 'Had you been waiting? / Had they been waiting?'],
+    uses: [['Duration before a past event', 'She had been studying for hours before the test began.', 'The study period led up to the test.'], ['A past result with an earlier cause', 'His clothes were wet because he had been walking in the rain.', 'The earlier activity explains the past evidence.'], ['An ongoing situation before a past reference time', 'They had been living there for years when the road was built.', 'The living situation was already established.']],
+    examples: [['We had been driving for three hours when we stopped.', 'Emphasizes duration up to the stop.'], ['How long had you been waiting before the bus arrived?', 'Asks about the period before a past event.'], ['The ground was muddy; it had been raining.', 'The earlier activity explains the past condition.']],
+    tips: ['Use had been + verb-ing for every subject.', 'Use for to state duration; the later past event can be in the Past Simple.', 'Choose the Past Perfect Simple when the completed result or number matters more than duration.'],
+    mistake: 'Keep the auxiliary sequence complete: “had been working,” not “had working.”',
+    contrast: 'Past Perfect Continuous emphasizes duration (“had been waiting for an hour”); Past Perfect Simple emphasizes completion (“had finished the report”).',
+    timeWords: 'for, since, before, until, all morning, how long',
+    videoQuery: 'English past perfect continuous grammar lesson'
+  },
+  'Future Simple': {
+    subtitle: 'Use will to make predictions, promises, offers, and quick decisions.',
+    definition: 'The future with will is formed with will plus the base verb. It commonly expresses predictions, willingness, promises, offers, and decisions made at the moment of speaking.',
+    form: ['will + base verb', 'I will call. / She will call.', 'I will not call. / She will not call.', 'Will you call? / Will she call?'],
+    uses: [['A prediction or opinion about the future', 'I think the team will win.', 'The speaker presents a prediction.'], ['A decision made now', 'The phone is ringing—I will answer it.', 'The decision is made as the situation arises.'], ['A promise, offer, or willingness', 'I will help you carry those books.', 'Will communicates willingness or a commitment.']],
+    examples: [['I will send you the notes tonight.', 'A promise or commitment.'], ['I think it will be cooler tomorrow.', 'A prediction.'], ['“I forgot my pen.” “I will lend you one.”', 'A decision and offer made now.']],
+    tips: ['Use will + base verb; it never changes for he or she.', 'The contraction ’ll is common in speech; won’t is the irregular negative contraction of will not.', 'For prior plans, English often uses going to or the Present Continuous instead of will.'],
+    mistake: 'Do not add -s after will: “She will arrive,” not “She will arrives.”',
+    contrast: 'Will often expresses a spontaneous decision or prediction; going to commonly presents an intention already formed or a prediction based on present evidence.',
+    timeWords: 'tomorrow, next week, soon, later, I think, probably',
+    videoQuery: 'BBC Learning English will future forms'
+  },
+  'Future Continuous': {
+    subtitle: 'Describe an activity that will be in progress at a future time.',
+    definition: 'The Future Continuous uses will be with an -ing verb. It views an activity as underway at a particular future time, or as part of the expected course of events.',
+    form: ['will be + verb-ing', 'I will be working. / They will be working.', 'I will not be working. / They will not be working.', 'Will you be working? / Will they be working?'],
+    uses: [['An action in progress at a future time', 'At nine tomorrow, I will be taking an exam.', 'Nine o’clock falls within the activity.'], ['An expected future course of events', 'She will be staying with us while she studies.', 'The activity is expected to continue over a period.'], ['A tactful enquiry about plans', 'Will you be using the meeting room this afternoon?', 'The question asks about an expected activity politely.']],
+    examples: [['This time next week, we will be travelling.', 'The journey will be underway at that time.'], ['He will be working late, so leave him a message.', 'The activity is expected then.'], ['Will you be joining us for lunch?', 'A neutral, polite enquiry.']],
+    tips: ['Use will be + verb-ing; keep be in the sentence.', 'It focuses on an activity in progress, not simply whether it will be completed.', 'A future-time expression often identifies the reference point.'],
+    mistake: 'Do not use the base verb alone after will be: “will be studying,” not “will be study.”',
+    contrast: 'Future Simple reports a future action (“I will call at noon”); Future Continuous presents it as underway at a future moment (“I will be travelling at noon”).',
+    timeWords: 'this time tomorrow, at 8 tonight, next week, all afternoon',
+    videoQuery: 'future continuous tense grammar lesson'
+  },
+  'Future Perfect': {
+    subtitle: 'Look ahead to something that will be complete by a future deadline.',
+    definition: 'The Future Perfect uses will have with a past participle. It views an action as complete before a stated or understood future point.',
+    form: ['will have + past participle', 'I will have finished. / She will have finished.', 'I will not have finished. / She will not have finished.', 'Will you have finished? / Will she have finished?'],
+    uses: [['Completion before a future time', 'By Friday, we will have completed the project.', 'Friday is the deadline; completion comes before it.'], ['A prediction about a completed event', 'They will have arrived by now.', 'The speaker infers that arrival has probably happened.'], ['A duration viewed at a future point', 'In June, she will have worked here for ten years.', 'The completed period reaches the future reference point.']],
+    examples: [['I will have read the book by the end of the month.', 'The reading will be complete before the deadline.'], ['Will you have sent the application by Tuesday?', 'Asks whether completion will happen by then.'], ['By 2030, the city will have built a new bridge.', 'A prediction of future completion.']],
+    tips: ['Use will have + the past participle.', 'By means “not later than”; by the time introduces the future reference point.', 'Focus on completion or a result by that point.'],
+    mistake: 'Use have—not has—after will: “She will have finished,” not “will has finished.”',
+    contrast: 'Future Perfect focuses on what will be completed by a future point; Future Continuous focuses on what will be in progress then.',
+    timeWords: 'by Friday, by then, by the time, before, in two years',
+    videoQuery: 'future perfect tense grammar lesson'
+  },
+  'Future Perfect Continuous': {
+    subtitle: 'Emphasize how long an activity will have continued by a future point.',
+    definition: 'The Future Perfect Continuous uses will have been plus an -ing verb. It looks forward to a future reference time and measures the duration of an activity up to that point.',
+    form: ['will have been + verb-ing', 'I will have been working. / They will have been working.', 'I will not have been working. / They will not have been working.', 'Will you have been working? / Will they have been working?'],
+    uses: [['Duration up to a future point', 'By June, I will have been studying here for a year.', 'The study period reaches the future reference point.'], ['An activity leading to a future result', 'She will be tired because she will have been travelling all night.', 'Duration explains the expected future condition.'], ['A future duration question', 'How long will you have been living here by December?', 'Asks for the length of time up to December.']],
+    examples: [['By 6 p.m., they will have been practising for four hours.', 'Measures activity up to a future time.'], ['Next month, he will have been teaching for ten years.', 'The teaching period reaches that future point.'], ['Will you have been waiting long by the time I arrive?', 'Asks about the duration before arrival.']],
+    tips: ['Keep the full structure: will have been + verb-ing.', 'Use for to express duration; use by or by the time for the future reference point.', 'This form emphasizes duration. Use Future Perfect Simple when completion or quantity is more important.'],
+    mistake: 'Do not drop been: “will have been working,” not “will have working.”',
+    contrast: 'Future Perfect Continuous stresses duration (“will have been teaching for ten years”); Future Perfect stresses completion or achievement (“will have taught 200 students”).',
+    timeWords: 'for, by June, by the time, all day, how long',
+    videoQuery: 'future perfect continuous tense grammar lesson'
+  }
+};

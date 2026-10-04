@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="practice-data.js" defer></script>
+  <script src="reference-data.js" defer></script>
+  <script src="lesson-data.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -18,7 +21,7 @@
       <span class="brand-wordmark"><span class="brand-english">English</span><span class="brand-club">club</span></span>
     </a>
     <div class="topbar-center">Your little corner to learn English from the Sudanese community</div>
-    <div class="saalpu-mark" aria-label="SAALPU Sudanese community mark"><img src="assets/saalpu-sudan-flag.png" alt="Sudan map filled with the Sudanese flag"><span>SAALPU</span></div>
+    <div class="saalpu-mark" aria-label="SSALPU Sudanese community mark"><span class="saalpu-letters"><span class="flag-red">S</span><span class="flag-green">S</span><span class="flag-black">A</span><span class="flag-green">L</span><span class="flag-red">P</span><span class="flag-black">U</span></span></div>
   </header>
 
   <div class="app-shell">
@@ -44,6 +47,13 @@
           <div class="nav-items" data-items="future"></div>
         </div>
       </nav>
+      <div class="nav-group reference-group">
+        <button class="group-heading" type="button" aria-expanded="true" data-group="reference"><span class="group-icon reference-icon">↗</span><span>Quick reference</span><span class="group-count">02</span><span class="chevron">⌄</span></button>
+        <div class="nav-items" data-items="reference">
+          <a class="nav-item reference-item" href="#verbs" data-reference="verbs">100 common verbs</a>
+          <a class="nav-item reference-item" href="#sentences" data-reference="sentences">100 useful sentences</a>
+        </div>
+      </div>
       <div class="sidebar-bottom"><div class="leaf-icon">✳</div><div><strong>Little by little</strong><span>You're doing better than you think.</span></div></div>
     </aside>
 
@@ -71,6 +81,7 @@
       <section class="lesson-view" id="lesson" aria-labelledby="lesson-title" hidden>
         <div class="lesson-topline"><div class="breadcrumbs"><a href="#home">Home</a><span>/</span><span>Present tenses</span><span>/</span><strong>Present Simple</strong></div><div class="lesson-meta"><span class="difficulty"><span></span> BEGINNER FRIENDLY</span><span class="meta-dot">·</span><span>6 MIN READ</span></div></div>
         <div class="lesson-heading"><div class="lesson-heading-copy"><div class="lesson-kicker"><span class="kicker-pill">LESSON 01</span><span>THE EVERYDAY TENSE</span></div><h1 id="lesson-title">Present Simple<span class="title-period">.</span></h1><p>For routines, facts, and all the little things that happen again and again.</p></div><div class="heading-illustration" aria-hidden="true"><div class="sun-face">☼</div><div class="heading-cloud">☁</div><div class="heading-ground"></div><div class="heading-sprout">♧</div></div></div>
+        <div class="lesson-mode-switch" aria-label="Lesson mode"><button class="mode-button active" data-mode="study">Study</button><button class="mode-button" data-mode="practice">Practice</button></div>
         <div class="lesson-tabs" role="tablist" aria-label="Lesson sections"><button class="lesson-tab active" role="tab" aria-selected="true" data-tab="explanation"><span>01</span> The idea</button><button class="lesson-tab" role="tab" aria-selected="false" data-tab="examples"><span>02</span> Real-life examples</button><button class="lesson-tab" role="tab" aria-selected="false" data-tab="tips"><span>03</span> Quick tips</button><button class="lesson-tab" role="tab" aria-selected="false" data-tab="videos"><span>04</span> Watch & learn</button></div>
         <div class="lesson-layout"><div class="lesson-article">
           <section class="lesson-section" id="explanation" data-section="explanation"><div class="section-heading"><span class="section-number">01</span><div><div class="section-eyebrow">LET'S GET THE IDEA</div><h2>What is the Present Simple?</h2></div></div><p class="section-lead">Think of it as your <strong>everyday tense</strong>. We use the Present Simple to talk about routines, things that are generally true, and situations that stay the same.</p><div class="explanation-card"><div class="card-icon">☀</div><div><strong>The short version</strong><p>If something happens regularly or is true most of the time, the Present Simple is probably your tense.</p></div></div><div class="subheading-row"><h3>How to build a sentence</h3><span class="subheading-note">NICE AND SIMPLE</span></div><div class="formula-card"><div class="formula-line"><span class="formula-label">I / YOU / WE / THEY</span><span class="formula-equals">+</span><span class="formula-tense">base verb</span><span class="formula-example">I <b>work</b> here.</span></div><div class="formula-divider"></div><div class="formula-line"><span class="formula-label">HE / SHE / IT</span><span class="formula-equals">+</span><span class="formula-tense">verb + s</span><span class="formula-example">She <b>work<b>s</b></b> here.</span></div></div><div class="grammar-note"><span class="note-icon">i</span><p><strong>Little detail, big difference:</strong> Add <b>-s</b> or <b>-es</b> to the verb with <em>he, she,</em> or <em>it</em>. <span>He reads. She watches. It works.</span></p></div><div class="subheading-row"><h3>Make it negative or ask a question</h3><span class="subheading-note">WITH DO / DOES</span></div><div class="two-cards"><div class="pattern-card"><span class="pattern-label">SAY “NO”</span><p>I <b>don't</b> drink coffee.<br>She <b>doesn't</b> drink coffee.</p><span class="pattern-hint">Don't / doesn't + base verb</span></div><div class="pattern-card question-pattern"><span class="pattern-label">ASK A QUESTION</span><p><b>Do</b> you like tea?<br><b>Does</b> he like tea?</p><span class="pattern-hint">Do / does + person + base verb?</span></div></div></section>
@@ -84,6 +95,7 @@
           <div class="lesson-footer"><span><span class="footer-star">✳</span> One lesson down. Look at you go!</span><button type="button" class="back-to-top" data-back-top>Back to top ↑</button></div>
         </div></div>
       </section>
+      <section class="library-view" id="library-view" hidden aria-live="polite"></section>
     </main>
   </div>
   <footer class="site-footer"><span>✳</span> Made with care for curious English learners. <span>Keep showing up.</span></footer>
